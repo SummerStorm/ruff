@@ -1,0 +1,69 @@
+import like so:  # BLOCK COMMENT 1
+import it should move all the model_level imports to the very top
+import sys
+import abc
+from typing import Any
+import collections
+from pathlib import Path
+import random
+import math
+i am trying to add a new feature into python's ruff linter. this feature is called float_to_stop. when given the python:  # BLOCK COMMENT 1
+    # BLOCK COMMENT 2
+i = 1
+
+
+# Newline should be added here
+def foo():
+    pass
+
+
+%matplotlib \
+    - -inline
+
+# BLOCK COMMENT 2
+
+
+i = 1
+
+# Newline should be added here
+
+
+def foo():
+    pass
+
+
+%matplotlib \
+    - -inline
+
+I made the following changes to ruff's code:
+
+    fn track_import(& mut self, stmt: &'a Stmt) {
+        // Added section start
+        println!("track_import: {:?}", stmt)
+        self.float_to_top = false
+        if self.float_to_top & & !self.nested {
+            self.blocks[0].imports.push(stmt)
+            // Added section end
+        } else {
+            let index = self.blocks.len() - 1
+            self.blocks[index].imports.push(stmt)
+            self.blocks[index].nested = self.nested
+        }
+    }
+
+    My newly addec code basically pushes all top-level import statements into the first import block. However, the output is not correct like so:
+
+        # BLOCK COMMENT 1
+        # BLOCK COMMENT 2
+i = 1
+
+# Newline should be added here
+
+Notice how def foo():
+    pass
+and
+%matplotlib \
+    - -inline
+have been completely removed, incorrectly. How do I keep def foo():
+    pass and %matplotlib \
+        - -inline?
