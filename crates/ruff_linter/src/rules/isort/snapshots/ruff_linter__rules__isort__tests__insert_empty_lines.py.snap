@@ -2,79 +2,136 @@
 source: crates/ruff_linter/src/rules/isort/mod.rs
 ---
 insert_empty_lines.py:1:1: I001 [*] Import block is un-sorted or un-formatted
-  |
-1 | / import a
-2 | | import b
-  | |________^ I001
-3 |   x = 1
-4 |   import os
-  |
-  = help: Organize imports
-
-ℹ Safe fix
-1 1 | import a
-2 2 | import b
-  3 |+
-3 4 | x = 1
-4 5 | import os
-5 6 | import sys
-
-insert_empty_lines.py:4:1: I001 [*] Import block is un-sorted or un-formatted
-  |
-2 |   import b
-3 |   x = 1
-4 | / import os
-5 | | import sys
-  | |__________^ I001
-6 |   def f():
-7 |       pass
-  |
-  = help: Organize imports
-
-ℹ Safe fix
-3 3 | x = 1
-4 4 | import os
-5 5 | import sys
-  6 |+
-  7 |+
-6 8 | def f():
-7 9 |     pass
-8 10 | if True:
-
-insert_empty_lines.py:14:1: I001 [*] Import block is un-sorted or un-formatted
    |
-12 |   class X: pass
-13 |   y = 1
-14 | / import os
+ 1 | / import a
+ 2 | | import b
+ 3 | | x = 1
+ 4 | | import os
+ 5 | | import sys
+ 6 | | def f():
+ 7 | |     pass
+ 8 | | if True:
+ 9 | |     x = 1
+10 | |     import collections
+11 | |     import typing
+12 | | class X: pass
+13 | | y = 1
+14 | | import os
 15 | | import sys
-   | |__________^ I001
-16 |   """Docstring"""
+16 | | """Docstring"""
+17 | |
+18 | | if True:
+19 | |     import os
+20 | |
+21 | |
+22 | | def f():
+23 | |     pass
+24 | |
+25 | |
+26 | | if True:
+27 | |     import os
+28 | | def f():
+29 | |     pass
+30 | |
+31 | | if True:
+32 | |     x = 1
+33 | |     import collections
+34 | |     import typing
+35 | |     class X: pass
+36 | |
+37 | | if True:
+38 | |     x = 1
+39 | |     import collections
+40 | |     import typing
+41 | |     def f(): pass
+42 | |
+43 | |
+44 | | import os
+45 | |
+46 | | # Comment goes here.
+47 | |
+48 | | def f():
+49 | |     pass
+50 | |
+51 | |
+52 | | import os
+53 | |
+54 | | # Comment goes here.
+55 | | def f():
+56 | |     pass
+57 | |
+58 | |
+59 | | import os
+   | |_________^ I001
+60 |
+61 |   # Comment goes here.
    |
    = help: Organize imports
 
 ℹ Safe fix
-13 13 | y = 1
-14 14 | import os
-15 15 | import sys
-   16 |+
-16 17 | """Docstring"""
-17 18 | 
-18 19 | if True:
-
-insert_empty_lines.py:52:1: I001 [*] Import block is un-sorted or un-formatted
-   |
-52 | import os
-   | ^^^^^^^^^ I001
-53 |
-54 | # Comment goes here.
-   |
-   = help: Organize imports
-
-ℹ Safe fix
-51 51 | 
-52 52 | import os
-53 53 | 
-   54 |+
-54 55 | # Comment goes here.
-55 56 | def f():
-56 57 |     pass
+1     |-import a
+2     |-import b
+3     |-x = 1
+4     |-import os
+5     |-import sys
+6     |-def f():
+7     |-    pass
+8     |-if True:
+9     |-    x = 1
+10    |-    import collections
+11    |-    import typing
+12    |-class X: pass
+13    |-y = 1
+   1  |+# Comment goes here.
+   2  |+# Comment goes here.
+14 3  | import os
+15 4  | import sys
+16    |-"""Docstring"""
+17    |-
+18    |-if True:
+19    |-    import os
+20    |-
+21    |-
+22    |-def f():
+23    |-    pass
+24 5  | 
+25    |-
+26    |-if True:
+27    |-    import os
+28    |-def f():
+29    |-    pass
+30    |-
+31    |-if True:
+32    |-    x = 1
+33    |-    import collections
+34    |-    import typing
+35    |-    class X: pass
+36    |-
+37    |-if True:
+38    |-    x = 1
+39    |-    import collections
+40    |-    import typing
+41    |-    def f(): pass
+42    |-
+43    |-
+44    |-import os
+45    |-
+46    |-# Comment goes here.
+47    |-
+48    |-def f():
+49    |-    pass
+50    |-
+51    |-
+52    |-import os
+53    |-
+54    |-# Comment goes here.
+55    |-def f():
+56    |-    pass
+57    |-
+58    |-
+59    |-import os
+   6  |+import a
+   7  |+import b
+60 8  | 
+61 9  | # Comment goes here.
+62 10 |

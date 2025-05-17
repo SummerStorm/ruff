@@ -44,6 +44,7 @@ pub struct IsortDirectives {
     /// Text positions at which splits should be inserted
     pub splits: Vec<TextSize>,
     pub skip_file: bool,
+    pub float_to_top: bool,
 }
 
 pub struct Directives {

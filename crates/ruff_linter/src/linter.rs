@@ -809,6 +809,26 @@ mod tests {
     }
 
     #[test]
+    fn test_zzz() -> Result<(), NotebookError> {
+        let actual = notebook_path("isort.ipynb");
+
+        let source_notebook = Notebook::from_path(actual.as_ref())?;
+
+        let source_kind = SourceKind::IpyNotebook(source_notebook);
+        let (messages, transformed) = test_contents(
+            &source_kind,
+            actual.as_ref(),
+            &settings::LinterSettings::for_rule(Rule::UnsortedImports),
+        );
+        let linted_notebook: Notebook = transformed.into_owned().expect_ipy_notebook();
+        println!("===== print linted_notebook source here ");
+        println!("{}", linted_notebook.source_code());
+        println!("===== end linted_notebook source here ");
+
+        Ok(())
+    }
+
+    #[test]
     fn test_ipy_escape_command() -> Result<(), NotebookError> {
         let actual = notebook_path("ipy_escape_command.ipynb");
         let expected = notebook_path("ipy_escape_command_expected.ipynb");

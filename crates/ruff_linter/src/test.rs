@@ -63,8 +63,21 @@ pub(crate) fn assert_notebook_path(
     let source_kind = SourceKind::IpyNotebook(source_notebook);
     let (messages, transformed) = test_contents(&source_kind, path.as_ref(), settings);
     let expected_notebook = Notebook::from_path(expected.as_ref())?;
-    let linted_notebook = transformed.into_owned().expect_ipy_notebook();
+    let linted_notebook: Notebook = transformed.into_owned().expect_ipy_notebook();
 
+    println!("===== print new source here =====");
+    println!("{}", linted_notebook.source_code());
+    println!("===== end new source here =====");
+
+    println!("===== print source_notebook source here ");
+    println!("{}", source_kind.source_code());
+    println!("===== end source_notebook source here ");
+
+    println!("===== print expected source here ");
+    println!("{}", expected_notebook.source_code());
+    println!("===== end expected source here ");
+
+    // println!("{}", linted_notebook.cell_offsets());
     assert_eq!(
         linted_notebook.cell_offsets(),
         expected_notebook.cell_offsets()

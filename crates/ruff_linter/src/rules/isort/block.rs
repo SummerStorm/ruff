@@ -35,6 +35,7 @@ pub(crate) struct BlockBuilder<'a> {
     cell_offsets: Option<Peekable<slice::Iter<'a, TextSize>>>,
     exclusions: &'a [TextRange],
     nested: bool,
+    float_to_top: bool,
 }
 
 impl<'a> BlockBuilder<'a> {
@@ -44,6 +45,8 @@ impl<'a> BlockBuilder<'a> {
         is_stub: bool,
         cell_offsets: Option<&'a CellOffsets>,
     ) -> Self {
+        println!("BlockBuilder init: ");
+
         Self {
             locator,
             is_stub,
@@ -51,14 +54,25 @@ impl<'a> BlockBuilder<'a> {
             splits: directives.splits.iter().peekable(),
             exclusions: &directives.exclusions,
             nested: false,
+            float_to_top: directives.float_to_top,
             cell_offsets: cell_offsets.map(|offsets| offsets.iter().peekable()),
         }
     }
 
+    pub(crate) fn blocks_mut(&mut self) -> &mut [Block<'a>] {
+        &mut self.blocks
+    }
+
     fn track_import(&mut self, stmt: &'a Stmt) {
-        let index = self.blocks.len() - 1;
-        self.blocks[index].imports.push(stmt);
-        self.blocks[index].nested = self.nested;
+        println!("track_import: {:?}", stmt);
+        self.float_to_top = false;
+        if self.float_to_top && !self.nested {
+            self.blocks[0].imports.push(stmt);
+        } else {
+            let index = self.blocks.len() - 1;
+            self.blocks[index].imports.push(stmt);
+            self.blocks[index].nested = self.nested;
+        }
     }
 
     fn trailer_for(&self, stmt: &'a Stmt) -> Option<Trailer> {

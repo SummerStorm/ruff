@@ -1,5 +1,9 @@
 [workspace]
 members = ["crates/*"]
+default-members = [
+    "crates/ruff_linter", # only build this by default
+]
+
 resolver = "2"
 
 [workspace.package]
